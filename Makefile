@@ -1,9 +1,9 @@
 ENV_DIR := $(shell pwd)/_env
-PYTHON_BIN := $(shell which python)
+PYTHON_BIN := $(shell which python3)
 
-DEB_COMPONENT := ellis
+DEB_COMPONENT := ellis-ng
 DEB_MAJOR_VERSION := 1.0${DEB_VERSION_QUALIFIER}
-DEB_NAMES := ellis
+DEB_NAMES := ellis-ng
 
 # The build has been seen to fail on Mac OSX when trying to build on i386. Enable this to build for x86_64 only
 X86_64_ONLY=0
@@ -29,7 +29,7 @@ test: bin/python setup.py
 coverage: bin/coverage setup.py
 	rm -rf htmlcov/
 	bin/coverage erase
-	bin/coverage run --source src,common --omit "**/test/**"  setup.py test
+	bin/coverage run --source src --omit "**/test/**"  setup.py test
 	bin/coverage report -m
 	bin/coverage html
 
@@ -46,7 +46,6 @@ endif
 
 bin/buildout: $(ENV_DIR)/bin/python
 	mkdir -p .buildout_downloads/dist
-	cp thrift_download/thrift-0.8.0.tar.gz .buildout_downloads/dist/
 	$(ENV_DIR)/bin/easy_install "setuptools>0.7"
 	$(ENV_DIR)/bin/easy_install distribute
 	$(ENV_DIR)/bin/easy_install zc.buildout

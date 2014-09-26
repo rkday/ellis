@@ -1,4 +1,4 @@
-Source: ellis
+Source: ellis-ng
 Section: network
 Priority: optional
 # This field must stay as 'Project Clearwater Maintainers', as
@@ -9,8 +9,8 @@ Build-Depends: debhelper (>= 8.0.0)
 Standards-Version: 3.9.2
 Homepage: http://projectclearwater.org/
 
-Package: ellis
+Package: ellis-ng
 Architecture: any
 Depends: clearwater-infrastructure, mysql-server, libgmp10, python-setuptools, python-virtualenv, monit, authbind (>= 2.0.0)
-Suggests: clearwater-logging, clearwater-snmpd
+Suggests: clearwater-snmpd
 Description: ellis, the user/number management interface
