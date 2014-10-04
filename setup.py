@@ -53,5 +53,5 @@ setup(
         '': ['*.eml'],
         },
     test_suite='metaswitch.ellis.test',
-    install_requires=["Mock"],
+    install_requires=["Mock", "requests", "responses", "Flask"],
     )
