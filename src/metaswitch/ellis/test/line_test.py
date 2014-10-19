@@ -89,4 +89,4 @@ class PrimaryLineTest(unittest.TestCase):
   "sip_uri":          "sip:test@example.com",
   "sip_username":     "test"
 }''')
-        self.assertEqual(json.loads(json_body), expected_json)
+        self.assertEqual(json_body, expected_json)

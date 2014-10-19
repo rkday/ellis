@@ -1,9 +1,5 @@
 import json
 
-class LinePool:
-    def get_next():
-        return "1234@example.com"
-
 def derive_impi_from_impu(impu):
     if impu[:4] == "sip:":
         return impu[4:]
@@ -52,9 +48,9 @@ class Line:
          "pstn": False,
          "gab_listed": False,
          "sip_uri": self.impu}
-        return json.dumps(info)
+        return info
 
-    def try_delete(self):
+    def try_delete(self, homestead):
         self.deletion_begun = True
         if self.secondary_impu_of is None:
             success = homestead.delete_irs()
