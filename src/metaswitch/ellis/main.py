@@ -1,7 +1,7 @@
 from flask import Flask, request, make_response, session
 import json
 import logging
-logging.basicConfig(filename='/home/rkd/ellis/log.txt')
+logging.basicConfig(filename='log2.txt')
 
 from metaswitch.ellis.lines import PrimaryLine
 from metaswitch.ellis.homestead_client import HomesteadClient
@@ -10,7 +10,7 @@ from metaswitch.ellis.memdb import InMemoryDatabase
 log = logging.getLogger("metaswitch.ellis.main")
 log.setLevel('DEBUG')
 
-app = Flask(__name__, static_folder='/home/rkd/ellis/web-content', static_url_path='')
+app = Flask(__name__, static_folder='../../../web-content', static_url_path='')
 
 def get_provided_data(request):
     provided_data = request.form.to_dict()
