@@ -1,4 +1,5 @@
-import json
+import logging
+log = logging.getLogger("metaswitch.ellis.lines")
 
 def derive_impi_from_impu(impu):
     if impu[:4] == "sip:":
@@ -22,15 +23,20 @@ class Line:
         self.irs_uri = None
 
     def create_elsewhere(self, homestead):
+        log.info("Trying to create line {} at Homestead".format(self.impu))
         self.sp_uri = homestead.create_sp(self.irs_uri)
         if self.sp_uri is None:
+            log.info("Failed to create service profile")
             self.deletion_begun = True
             return False
+        log.info("Created service profile with URL {}".format(self.sp_uri))
 
         homestead_impu_created_ok = homestead.create_impu(self, self.impu, self.sp_uri)
         if not homestead_impu_created_ok:
+            log.info("Failed to create IMPU at Homestead")
             self.deletion_begun = True
             return False
+        log.info("Created IMPU at Homestead")
 
         #simservs_created_ok = homer.create_simservs(self, self.impu, self.simservs)
         #if not simservs_created_ok:
@@ -72,13 +78,18 @@ class PrimaryLine(Line):
     def create_elsewhere(self, homestead):
         self.irs_uri = homestead.create_irs()
         if self.irs_uri is None:
+            log.info("Failed to create implicit registration set")
             self.deletion_begun = True
             return False
+        log.info("Created implicit registration set with URL {}".format(self.irs_uri))
 
         homestead_impi_created_ok = homestead.create_impi(self, self.impi, self.irs_uri)
         if not homestead_impi_created_ok:
+            log.info("Failed to create IMPI at Homestead")
             self.deletion_begun = True
             return False
+
+        log.info("Created IMPI at Homestead")
 
         return super().create_elsewhere(homestead)
 

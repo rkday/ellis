@@ -35,31 +35,9 @@
 var clearwater = (function(mod, $){
   var log = mod.log;
 
-  if(!$.cookie("username"))
-  {
-    log("Do not have cookie, redirect to login page");
-    window.location.href = "/login.html";
-    return;
-  }
-
-  var parsedUrl = mod.parseUrl();
   var username = null;
   var full_name = null;
-  if (parsedUrl["params"]["data"]) {
-    log(parsedUrl["params"]["data"]);
-    var data = JSON.parse(parsedUrl["params"]["data"]);
-    username = data["username"];
-    full_name = data["full_name"];
-    jQuery.totalStorage("username", username);
-    jQuery.totalStorage("full_name", full_name);
-  }
 
-  if (!username) {
-    username = jQuery.totalStorage("username");
-  }
-  if (!full_name) {
-    full_name = jQuery.totalStorage("full_name");
-  }
   var accUrlPrefix = "/accounts/" + encodeURIComponent(username);
   var numbersUrl = accUrlPrefix + "/numbers/";
 

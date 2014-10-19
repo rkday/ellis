@@ -1,10 +1,13 @@
 import requests
+import logging
+log = logging.getLogger("metaswitch.ellis.homestead_client")
 
 def NoneOnRequestException(f):
     def inner(*args, **kwargs):
         try:
             return f(*args, **kwargs)
-        except requests.exceptions.RequestException:
+        except requests.exceptions.RequestException as e:
+            log.error("Received RequestException: {}".format(e))
             return None
     return inner
 
@@ -12,7 +15,8 @@ def FalseOnRequestException(f):
     def inner(*args, **kwargs):
         try:
             return f(*args, **kwargs)
-        except requests.exceptions.RequestException:
+        except requests.exceptions.RequestException as e:
+            log.error("Received RequestException: {}".format(e))
             return False
     return inner
 
