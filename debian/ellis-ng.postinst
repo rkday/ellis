@@ -74,11 +74,10 @@ case "$1" in
         cd $ELLIS_DIR
         $ELLIS_DIR/env/bin/python $ELLIS_DIR/setup.py install
         cd -
-        cd $ELLIS_DIR/common
-        $ELLIS_DIR/env/bin/python $ELLIS_DIR/common/setup.py install
-        cd -
         chown -R $NAME:root $ELLIS_DIR/env
-
+        touch /usr/share/clearwater/ellis/ellis.log
+        chown $NAME /usr/share/clearwater/ellis/ellis.log
+        
         mysql -u root --password= < $ELLIS_DIR/src/metaswitch/ellis/data/schema.sql
         mysql -u root --password= < $ELLIS_DIR/src/metaswitch/ellis/data/apply_db_updates.sql
 

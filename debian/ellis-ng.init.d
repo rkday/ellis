@@ -50,8 +50,8 @@ DESC=ellis       # Introduce a short description here
 NAME=ellis       # Introduce the short server's name here (not suitable for --name)
 USER=ellis       # Username to run as
 DAEMON=/usr/share/clearwater/ellis/env/bin/python # Introduce the server's location here
-DAEMON_ARGS="-m metaswitch.ellis.main --background" # Arguments to run the daemon with
 DAEMON_DIR=/usr/share/clearwater/ellis/
+DAEMON_ARGS="-m metaswitch.ellis.main" # Arguments to run the daemon with
 PIDFILE=/var/run/$NAME/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 
@@ -80,7 +80,7 @@ do_start()
         [ -d /var/run/$NAME ] || install -m 755 -o $USER -g root -d /var/run/$NAME
 	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null \
 		|| return 1
-	/usr/bin/authbind --depth 2 start-stop-daemon --start --quiet --chdir $DAEMON_DIR --chuid $USER --pidfile $PIDFILE --exec $DAEMON -- \
+	/usr/bin/authbind --depth 3 start-stop-daemon --start --quiet --chdir $DAEMON_DIR --chuid $USER --pidfile $PIDFILE --exec $DAEMON -b -- \
 		$DAEMON_ARGS \
 		|| return 2
 	# Add code here, if necessary, that waits for the process to be ready

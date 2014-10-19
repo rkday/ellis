@@ -1,16 +1,15 @@
 from flask import Flask, request, make_response, session
 import json
 import logging
-logging.basicConfig(filename='log2.txt')
-
 from metaswitch.ellis.lines import PrimaryLine
 from metaswitch.ellis.homestead_client import HomesteadClient
 from metaswitch.ellis.memdb import InMemoryDatabase
+import os
 
 log = logging.getLogger("metaswitch.ellis.main")
 log.setLevel('DEBUG')
 
-app = Flask(__name__, static_folder='../../../web-content', static_url_path='')
+app = Flask(__name__, static_folder=os.getcwd()+'/web-content', static_url_path='')
 
 def get_provided_data(request):
     provided_data = request.form.to_dict()
@@ -152,5 +151,6 @@ if __name__ == '__main__':
     app.config['HOMESTEAD_CLIENT'] = HomesteadClient("127.0.0.1")
     app.config['DATABASE'] = InMemoryDatabase()
     app.secret_key = "abcde"
-    app.run(debug=True)
+    logging.basicConfig(filename='ellis.log')
+    app.run(debug=True, host="0.0.0.0", port=80)
 
